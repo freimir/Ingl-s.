@@ -11,6 +11,634 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Agregar icono para modo claro/oscuro -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ===== ESTILOS OPTIMIZADOS PARA BARRA DE NAVEGACIÓN COMPACTA ===== */
+        :root {
+            --nav-height: 58px;
+            --nav-bg: rgba(255, 255, 255, 0.98);
+            --nav-bg-scrolled: rgba(255, 255, 255, 0.99);
+            --nav-bg-dark: rgba(17, 24, 39, 0.98);
+            --nav-bg-scrolled-dark: rgba(17, 24, 39, 0.99);
+            --nav-shadow: 0 2px 12px rgba(0, 0, 0, 0.356);
+            --nav-shadow-dark: 0 2px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        [data-theme="dark"] {
+            --nav-bg: var(--nav-bg-dark);
+            --nav-bg-scrolled: var(--nav-bg-scrolled-dark);
+            --nav-shadow: var(--nav-shadow-dark);
+        }
+        
+        /* Header principal compacto */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background: var(--nav-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--nav-shadow);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .main-header.scrolled {
+            height: 52px;
+            background: var(--nav-bg-scrolled);
+            box-shadow: 0 3px 18px rgba(0, 0, 0, 0.06);
+        }
+        
+        [data-theme="dark"] .main-header.scrolled {
+            box-shadow: 0 3px 18px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Contenedor del menú compacto */
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 1.2rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        /* Logo/Brand compacto */
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: transform 0.2s ease;
+            padding: 0.3rem 0;
+        }
+        
+        .nav-brand:hover {
+            transform: translateY(-1px);
+        }
+        
+        .nav-logo {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+        
+        /* Menú principal ultra compacto */
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.1rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-menu li {
+            position: relative;
+        }
+        
+        .nav-menu a {
+            display: block;
+            padding: 0.5rem 0.85rem;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.87rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            letter-spacing: 0.01em;
+        }
+        
+        .nav-menu a:hover {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        .nav-menu a.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15);
+            font-weight: 600;
+        }
+        
+        /* Indicador sutil del elemento activo */
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+        
+        /* Botón hamburguesa compacto */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 2.5px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all 0.2s ease;
+        }
+        
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        
+        /* Overlay para móvil */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 998;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        /* Espacio mínimo para evitar solapamiento */
+        .header-spacer {
+            height: var(--nav-height);
+        }
+        
+        /* Ajustes de scroll para secciones */
+        section[id] {
+            scroll-margin-top: 62px;
+        }
+        
+        /* Botón de tema compacto */
+        .theme-toggle {
+            top: 0.9rem;
+            right: 0.9rem;
+            z-index: 1001;
+            position: fixed;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 2.4rem;
+            height: 2.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            color: var(--text);
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+        }
+        
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+        
+        [data-theme="dark"] .theme-toggle .fa-moon {
+            display: none;
+        }
+        
+        [data-theme="dark"] .theme-toggle .fa-sun {
+            display: block;
+        }
+/*___________________________________________________*/        
+        /* Header principal con imagen y overlay oscuro */
+        .header {
+            background-image: url(img/header.png);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            padding: 1.5rem 0 2rem 0;
+            margin-top: 0;
+            height: auto;
+            min-height: 400px; /* Altura mínima para que se vea bien */
+            display: flex;
+            align-items: center;
+        }
+
+        /* Overlay oscuro sobre la imagen */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.7) 0%,
+                rgba(0, 0, 0, 0.5) 50%,
+                rgba(0, 0, 0, 0.4) 100%
+            );
+            z-index: 1;
+        }
+
+        /* Asegurar que el contenido esté sobre el overlay */
+        .header-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+/*___________________________________________________*/
+        .header-content {
+            padding-top: 1rem;
+        }
+        
+        .header-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.4rem 1.2rem;
+            border-radius: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            font-size: 0.82rem;
+            letter-spacing: 0.4px;
+        }
+        
+        .header h1 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            margin-bottom: 0.9rem;
+            color: white;
+            line-height: 1.2;
+        }
+        
+        .header-subtitle {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.92);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+        
+        /* Elementos decorativos ajustados */
+        .header-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .decoration-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+        }
+        
+        .decoration-circle:nth-child(1) {
+            width: 240px;
+            height: 240px;
+            top: -120px;
+            right: -80px;
+        }
+        
+        .decoration-circle:nth-child(2) {
+            width: 160px;
+            height: 160px;
+            bottom: -40px;
+            left: 8%;
+        }
+        
+        .decoration-circle:nth-child(3) {
+            width: 120px;
+            height: 120px;
+            top: 15%;
+            left: 4%;
+        }
+        
+        /* Botones compactos */
+        .header-cta {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary, .btn-secondary {
+            padding: 0.75rem 1.5rem;
+            border-radius: 7px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.92);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: white;
+            transform: translateY(-1px);
+        }
+        
+        /* ===== RESPONSIVE OPTIMIZADO ===== */
+        
+        /* Tablets y laptops pequeños */
+        @media (max-width: 1100px) and (min-width: 769px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .nav-menu a {
+                padding: 0.45rem 0.7rem;
+                font-size: 0.82rem;
+            }
+            
+            .nav-brand span:not(.nav-logo) {
+                font-size: 0.95rem;
+            }
+            
+            .header h1 {
+                font-size: 1.9rem;
+            }
+            
+            .header-subtitle {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Tablets */
+        @media (max-width: 900px) and (min-width: 769px) {
+            .nav-menu a {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            
+            .nav-brand span:not(.nav-logo) {
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Móviles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: var(--nav-height);
+                left: 0;
+                width: 100%;
+                background: var(--nav-bg);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                flex-direction: column;
+                padding: 0.8rem 0;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 999;
+                max-height: calc(100vh - var(--nav-height));
+                overflow-y: auto;
+                border-top: 1px solid var(--border);
+            }
+            
+            .nav-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .nav-menu li {
+                width: 100%;
+            }
+            
+            .nav-menu a {
+                padding: 0.85rem 1.8rem;
+                border-radius: 0;
+                border-left: 3px solid transparent;
+                font-size: 0.92rem;
+                margin: 0.1rem 0;
+            }
+            
+            .nav-menu a:hover,
+            .nav-menu a.active {
+                border-left-color: var(--primary);
+                background: var(--primary-light);
+                transform: none;
+            }
+            
+            .nav-menu a.active::after {
+                display: none;
+            }
+            
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .theme-toggle {
+                top: 0.8rem;
+                right: 0.8rem;
+                width: 2.2rem;
+                height: 2.2rem;
+                z-index: 1002;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header-subtitle {
+                font-size: 0.95rem;
+                padding: 0 1rem;
+            }
+            
+            .header-cta {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.7rem;
+            }
+            
+            .btn-primary, .btn-secondary {
+                width: 85%;
+                max-width: 250px;
+                text-align: center;
+            }
+        }
+        
+        /* Móviles pequeños */
+        @media (max-width: 480px) {
+            :root {
+                --nav-height: 52px;
+            }
+            
+            .nav-container {
+                padding: 0 0.8rem;
+            }
+            
+            .nav-brand span:not(.nav-logo) {
+                font-size: 0.9rem;
+            }
+            
+            .nav-logo {
+                width: 30px;
+                height: 30px;
+                font-size: 0.85rem;
+                border-radius: 6px;
+            }
+            
+            .theme-toggle {
+                top: 0.7rem;
+                right: 0.7rem;
+                width: 2rem;
+                height: 2rem;
+                font-size: 0.8rem;
+            }
+            
+            .menu-toggle {
+                width: 24px;
+                height: 16px;
+            }
+            
+            .menu-toggle span {
+                height: 2px;
+            }
+            
+            .header h1 {
+                font-size: 1.6rem;
+                padding: 0 0.5rem;
+            }
+            
+            .header-subtitle {
+                font-size: 0.9rem;
+                padding: 0 0.8rem;
+            }
+            
+            section[id] {
+                scroll-margin-top: 56px;
+            }
+        }
+        
+        /* Móviles muy pequeños */
+        @media (max-width: 360px) {
+            .nav-brand span:not(.nav-logo) {
+                display: none;
+            }
+            
+            .nav-brand {
+                gap: 0;
+            }
+            
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .header-subtitle {
+                font-size: 0.85rem;
+            }
+        }
+        
+        /* Pantallas muy grandes */
+        @media (min-width: 1400px) {
+            .nav-container {
+                max-width: 1350px;
+            }
+        }
+        
+        /* Animación de entrada para items del menú móvil */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .nav-menu.active li {
+            animation: slideIn 0.2s ease forwards;
+        }
+        
+        .nav-menu.active li:nth-child(1) { animation-delay: 0.08s; }
+        .nav-menu.active li:nth-child(2) { animation-delay: 0.12s; }
+        .nav-menu.active li:nth-child(3) { animation-delay: 0.16s; }
+        .nav-menu.active li:nth-child(4) { animation-delay: 0.20s; }
+        .nav-menu.active li:nth-child(5) { animation-delay: 0.24s; }
+        .nav-menu.active li:nth-child(6) { animation-delay: 0.28s; }
+        .nav-menu.active li:nth-child(7) { animation-delay: 0.32s; }
+        .nav-menu.active li:nth-child(8) { animation-delay: 0.36s; }
+    </style>
 </head>
 
 <body>
@@ -20,24 +648,46 @@
         <i class="fas fa-sun"></i>
     </button>
 
-    <header class="header">
+    <!-- Menú de navegación fijo COMPACTO -->
+    <header class="main-header" id="main-header">
         <div class="nav-container">
-            <div class="nav-wrapper">
-                <nav aria-label="Main Navigation">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="#introduction">Introduction</a></li>
-                        <li><a href="#vocabulary">Key Vocabulary</a></li>
-                        <li><a href="#reading">Reading Section</a></li>
-                        <li><a href="#discussion">Discussion Prompts</a></li>
-                        <li><a href="#conclusion">Conclusion</a></li>
-                        <li><a href="#resources">Further Resources</a></li>
-                        <li><a href="#pdf-article">Academic Article</a></li>
-                    </ul>
-                </nav>
-            </div>
+            <!-- Logo/Brand compacto -->
+            <a href="#home" class="nav-brand">
+                <div class="nav-logo">EL</div>
+                <span>English Lesson</span>
+            </a>
+            
+            <!-- Botón hamburguesa compacto -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <!-- Menú de navegación ultra compacto -->
+            <nav aria-label="Main Navigation">
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#introduction" class="nav-link">Introduction</a></li>
+                    <li><a href="#vocabulary" class="nav-link">Key Vocabulary</a></li>
+                    <li><a href="#reading" class="nav-link">Reading Section</a></li>
+                    <li><a href="#discussion" class="nav-link">Discussion Prompts</a></li>
+                    <li><a href="#conclusion" class="nav-link">Conclusion</a></li>
+                    <li><a href="#resources" class="nav-link">Further Resources</a></li>
+                    <li><a href="#pdf-article" class="nav-link">Academic Article</a></li>
+                </ul>
+            </nav>
         </div>
+    </header>
+    
+    <!-- Overlay para cerrar menú en móvil -->
+    <div class="menu-overlay" id="menu-overlay"></div>
+    
+    <!-- Espacio mínimo para evitar solapamiento -->
+    <div class="header-spacer"></div>
 
+    <!-- Header principal optimizado -->
+    <header class="header" id="home">
         <div class="header-content">
             <span class="header-badge">English Lesson</span>
             <h1>Mass Surveillance and Digital Privacy: A Modern Dilemma</h1>
@@ -48,7 +698,7 @@
             </div>
         </div>
         
-        <!-- Elemento decorativo para el header -->
+        <!-- Elementos decorativos ajustados -->
         <div class="header-decoration">
             <div class="decoration-circle"></div>
             <div class="decoration-circle"></div>
@@ -57,7 +707,7 @@
     </header>
 
     <main class="main-container">
-
+        <!-- Sección 1: Introducción -->
         <section id="introduction">
             <h2><i class="fas fa-info-circle icon-header"></i> 1. Introduction: The Digital Privacy Landscape</h2>
             <p>In today's interconnected world, digital privacy has become one of the most pressing issues of our time. As we navigate online spaces, our personal data is constantly collected, analyzed, and often shared without our explicit consent. This lesson explores the complex relationship between mass surveillance practices and individual privacy rights.</p>
@@ -82,11 +732,12 @@
             </div>
             
             <figure>
-                <img src="images/surveillance_image.jpg" alt="A conceptual image representing digital data and security." />
+                <img src="img/1-introduccion.png" height="300" width="600" />
                 <figcaption>The balance between security and individual freedom is a constant challenge in the digital age.</figcaption>
             </figure>
         </section>
 
+        <!-- Sección 2: Vocabulario -->
         <section id="vocabulary">
             <h2><i class="fas fa-book icon-header"></i> 2. Key Vocabulary for the Topic</h2>
             <p>Master these essential terms to discuss privacy and surveillance effectively in English.</p>
@@ -139,6 +790,7 @@
             </div>
         </section>
 
+        <!-- Sección 3: Lectura -->
         <section id="reading">
             <h2><i class="fas fa-file-alt icon-header"></i> 3. Case Study: The Debate over Facial Recognition</h2>
             <article>
@@ -183,6 +835,7 @@
             </article>
         </section>
 
+        <!-- Sección 4: Discusión -->
         <section id="discussion">
             <h2><i class="fas fa-comments icon-header"></i> 4. Discussion & Opinion</h2>
             <p>Use these prompts to practice speaking and expressing your opinion on the topic. Try to use vocabulary from this lesson in your responses.</p>
@@ -199,6 +852,7 @@
             </div>
         </section>
         
+        <!-- Sección 5: Conclusión -->
         <section id="conclusion">
             <h2><i class="fas fa-flag-checkered icon-header"></i> 5. Conclusion & Key Takeaways</h2>
             <p>The debate around mass surveillance and digital privacy is complex and continually evolving. As technology advances, so do both the methods of surveillance and the tools for protecting privacy.</p>
@@ -220,6 +874,7 @@
             </div>
         </section>
 
+        <!-- Sección 6: Recursos -->
         <section id="resources">
             <h2><i class="fas fa-external-link-alt icon-header"></i> 6. Further Resources</h2>
             <p>Expand your understanding of digital privacy and surveillance with these recommended resources.</p>
@@ -275,7 +930,7 @@
             </div>
         </section>
 
-        <!-- NUEVA SECCIÓN: PDF ARTICLE -->
+        <!-- Sección 7: Artículo PDF -->
         <section id="pdf-article">
             <h2><i class="fas fa-file-pdf icon-header"></i> 7. Academic Article: "Mass Surveillance And Digital Privacy"</h2>
             <p>Read our detailed analysis of mass surveillance and digital privacy from the University Institute Jesús Obrero. This academic article provides additional insights and perspectives on the topic.</p>
@@ -321,28 +976,30 @@
                 </div>
                 
                 <!-- Espacio para el visor de PDF embebido (opcional) -->
-                <div class="pdf-embed-container" id="pdf-embed-container" style="display: none; margin-top: 2rem;">
+                <div class="pdf-embed-container" id="pdf-embed-container" style="display: none; margin-top: 1.5rem;">
                     <iframe 
                         src="Articulo The Order of the kinkou informatica seccion A.pdf" 
                         width="100%" 
-                        height="600" 
-                        style="border: 1px solid var(--border); border-radius: var(--radius);"
+                        height="500" 
+                        style="border: 1px solid var(--border); border-radius: 8px;"
                         title="PDF Viewer - Mass Surveillance and Digital Privacy">
                         Your browser does not support PDFs. <a href="Articulo The Order of the kinkou informatica seccion A.pdf">Download the PDF</a> instead.
                     </iframe>
                 </div>
             </div>
             
-            <div class="vocabulary-tip" style="margin-top: 2rem;">
+            <div class="vocabulary-tip" style="margin-top: 1.5rem;">
                 <i class="fas fa-book-reader"></i>
                 <p><strong>Academic Reading Tip:</strong> When reading academic articles, focus on understanding the main arguments, identifying supporting evidence, and noting any conclusions or recommendations made by the authors.</p>
             </div>
         </section>
 
     </main>
-    <footer class="footer">
+
+    <!-- Footer -->
+    <center><footer class="footer">
         <div class="footer-content">
-            <div class="footer-brand">
+           <!-- <div class="footer-brand">
                 <h3><i class="fas fa-graduation-cap"></i> English Lessons on Digital Privacy</h3>
                 <p class="footer-description">Educational resources exploring the intersection of technology, language, and human rights in the digital age.</p>
                 <div class="footer-social">
@@ -351,11 +1008,12 @@
                     <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
                     <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
                 </div>
-            </div>
-
+            </div>-->
+            
             <div class="footer-links">
                 <h4>Quick Links</h4>
                 <ul>
+                    <li><a href="#home">Home</a></li>
                     <li><a href="#introduction">Introduction</a></li>
                     <li><a href="#vocabulary">Key Vocabulary</a></li>
                     <li><a href="#reading">Reading Section</a></li>
@@ -365,7 +1023,7 @@
                 </ul>
             </div>
 
-            <div class="footer-contact">
+            <!--<div class="footer-contact">
                 <h4>Contact & Support</h4>
                 <ul>
                     <li><a href="#">Contact Us</a></li>
@@ -373,24 +1031,285 @@
                     <li><a href="#">Report an Issue</a></li>
                     <li><a href="teachers-resource.html">Teacher Resources</a></li>
                 </ul>
-            </div>
+            </div>-->
             
-            <div class="footer-newsletter">
+            <!--<div class="footer-newsletter">
                 <h4>Stay Updated</h4>
                 <p>Subscribe for new lessons and resources on digital literacy.</p>
                 <form class="newsletter-form">
                     <input type="email" placeholder="Your email address" aria-label="Email for newsletter">
                     <button type="submit">Subscribe</button>
                 </form>
-            </div>
+            </div>-->
         </div>
 
         <div class="footer-bottom">
             <p>&copy; 2025 English Lessons on Digital Security. This content is available under a Creative Commons Attribution-NonCommercial 4.0 International License.</p>
             <p class="footer-credit">Designed with accessibility and modern web standards in mind.</p>
         </div>
-    </footer>
+    </footer></center>
     
-    <script src="script.js"></script>
+    <script>
+        // ===== SCRIPT OPTIMIZADO PARA BARRA COMPACTA =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos principales
+            const header = document.getElementById('main-header');
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            const menuOverlay = document.getElementById('menu-overlay');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const themeToggle = document.getElementById('theme-toggle');
+            const viewPdfBtn = document.getElementById('view-pdf-btn');
+            const pdfEmbedContainer = document.getElementById('pdf-embed-container');
+            
+            // 1. Efecto de scroll en el header
+            function handleScroll() {
+                if (window.scrollY > 30) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                
+                // Resaltar enlace activo basado en scroll
+                highlightActiveSection();
+            }
+            
+            // 2. Resaltar sección activa al hacer scroll
+            function highlightActiveSection() {
+                let currentSection = '';
+                let maxVisible = 0;
+                
+                // Obtener todas las secciones
+                const sections = document.querySelectorAll('section[id]');
+                const homeSection = document.getElementById('home');
+                
+                // Verificar si la sección home está visible
+                if (homeSection) {
+                    const homeRect = homeSection.getBoundingClientRect();
+                    const homeVisible = homeRect.top <= 80 && homeRect.bottom >= 80;
+                    if (homeVisible) {
+                        currentSection = '#home';
+                        maxVisible = homeRect.height;
+                    }
+                }
+                
+                // Verificar otras secciones
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    const sectionHeight = rect.height;
+                    
+                    // Calcular qué tan visible está la sección
+                    const viewportHeight = window.innerHeight;
+                    const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+                    
+                    // Si está más visible que la actual y está al menos un 25% visible
+                    if (visibleHeight > maxVisible && visibleHeight > sectionHeight * 0.25) {
+                        maxVisible = visibleHeight;
+                        currentSection = '#' + section.id;
+                    }
+                });
+                
+                // Actualizar enlaces activos
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === currentSection) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            // 3. Toggle del menú móvil
+            function toggleMobileMenu() {
+                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                menuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                menuToggle.setAttribute('aria-expanded', !isExpanded);
+                
+                // Prevenir scroll cuando el menú está abierto
+                document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+            }
+            
+            // 4. Cerrar menú al hacer clic en enlace (móvil)
+            function closeMobileMenu() {
+                if (window.innerWidth <= 768) {
+                    menuToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                }
+            }
+            
+            // 5. Smooth scroll para enlaces
+            function smoothScroll(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Cerrar menú móvil si está abierto
+                    closeMobileMenu();
+                    
+                    // Calcular posición con offset del header
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = targetElement.offsetTop - headerHeight + 5;
+                    
+                    // Scroll suave
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+            
+            // 6. Funcionalidad del botón de tema
+            function setupThemeToggle() {
+                if (!themeToggle) return;
+                
+                // Comprobar preferencia del usuario
+                const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+                const savedTheme = localStorage.getItem('theme');
+                
+                // Establecer tema inicial
+                if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+                    document.body.setAttribute('data-theme', 'dark');
+                } else {
+                    document.body.setAttribute('data-theme', 'light');
+                }
+                
+                // Alternar tema al hacer clic
+                themeToggle.addEventListener('click', function() {
+                    const currentTheme = document.body.getAttribute('data-theme');
+                    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    
+                    document.body.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    
+                    // Animación del botón
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 100);
+                });
+            }
+            
+            // 7. Funcionalidad del visor de PDF embebido
+            function setupPdfViewer() {
+                if (!viewPdfBtn || !pdfEmbedContainer) return;
+                
+                viewPdfBtn.addEventListener('click', function() {
+                    if (pdfEmbedContainer.style.display === 'none' || pdfEmbedContainer.style.display === '') {
+                        pdfEmbedContainer.style.display = 'block';
+                        this.innerHTML = '<i class="fas fa-times"></i> Hide Embedded Viewer';
+                        this.classList.add('active');
+                        
+                        // Desplazar suavemente a la vista del PDF
+                        setTimeout(() => {
+                            pdfEmbedContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 200);
+                    } else {
+                        pdfEmbedContainer.style.display = 'none';
+                        this.innerHTML = '<i class="fas fa-eye"></i> View Embedded';
+                        this.classList.remove('active');
+                    }
+                });
+            }
+            
+            // 8. Event Listeners principales
+            function setupEventListeners() {
+                window.addEventListener('scroll', handleScroll);
+                menuToggle.addEventListener('click', toggleMobileMenu);
+                menuOverlay.addEventListener('click', closeMobileMenu);
+                
+                // Añadir smooth scroll a todos los enlaces del menú
+                navLinks.forEach(link => {
+                    link.addEventListener('click', smoothScroll);
+                });
+                
+                // Añadir smooth scroll a los botones CTA
+                document.querySelectorAll('.header-cta a, .btn-primary, .btn-secondary').forEach(btn => {
+                    if (btn.getAttribute('href') && btn.getAttribute('href').startsWith('#')) {
+                        btn.addEventListener('click', smoothScroll);
+                    }
+                });
+                
+                // Cerrar menú al redimensionar ventana (si se cambia a desktop)
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
+                        closeMobileMenu();
+                    }
+                });
+                
+                // Mejorar accesibilidad del menú móvil
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                        closeMobileMenu();
+                        menuToggle.focus();
+                    }
+                });
+                
+                // Trap focus dentro del menú móvil cuando está abierto
+                const focusableElements = navMenu.querySelectorAll('a');
+                if (focusableElements.length > 0) {
+                    const firstFocusableElement = focusableElements[0];
+                    const lastFocusableElement = focusableElements[focusableElements.length - 1];
+                    
+                    navMenu.addEventListener('keydown', function(e) {
+                        if (!navMenu.classList.contains('active')) return;
+                        
+                        if (e.key === 'Tab') {
+                            if (e.shiftKey) { // Shift + Tab
+                                if (document.activeElement === firstFocusableElement) {
+                                    e.preventDefault();
+                                    lastFocusableElement.focus();
+                                }
+                            } else { // Tab
+                                if (document.activeElement === lastFocusableElement) {
+                                    e.preventDefault();
+                                    firstFocusableElement.focus();
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+            
+            // 9. Inicializar todas las funcionalidades
+            function init() {
+                setupEventListeners();
+                setupThemeToggle();
+                setupPdfViewer();
+                handleScroll(); // Para el estado inicial
+                
+                // Manejar formulario de newsletter si existe
+                const newsletterForm = document.querySelector('.newsletter-form');
+                if (newsletterForm) {
+                    newsletterForm.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const emailInput = this.querySelector('input[type="email"]');
+                        const email = emailInput.value.trim();
+                        
+                        function validateEmail(email) {
+                            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                            return re.test(email);
+                        }
+                        
+                        if (email && validateEmail(email)) {
+                            // Simular envío exitoso
+                            emailInput.value = '';
+                            alert('Thank you for subscribing to our newsletter!');
+                        } else {
+                            alert('Please enter a valid email address.');
+                        }
+                    });
+                }
+            }
+            
+            // Iniciar la aplicación
+            init();
+        });
+    </script>
 </body>
 </html>

@@ -99,7 +99,9 @@ body {
 
 /* Header mejorado */
 .header {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    
+    background-image: url('img/header.png');
+    /*background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);*/
     color: white;
     position: relative;
     overflow: hidden;
