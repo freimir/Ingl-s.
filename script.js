@@ -160,4 +160,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
+
+    // 10. Funcionalidad para mostrar/ocultar el visor de PDF embebido
+const viewPdfBtn = document.getElementById('view-pdf-btn');
+if (viewPdfBtn) {
+    viewPdfBtn.addEventListener('click', function() {
+        const pdfContainer = document.getElementById('pdf-embed-container');
+        if (pdfContainer.style.display === 'none' || pdfContainer.style.display === '') {
+            pdfContainer.style.display = 'block';
+            this.innerHTML = '<i class="fas fa-times"></i> Hide Embedded Viewer';
+            this.classList.add('active');
+            
+            // Desplazar suavemente a la vista del PDF
+            setTimeout(() => {
+                pdfContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        } else {
+            pdfContainer.style.display = 'none';
+            this.innerHTML = '<i class="fas fa-eye"></i> View Embedded';
+            this.classList.remove('active');
+        }
+    });
+}
 });

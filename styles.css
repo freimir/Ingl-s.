@@ -806,3 +806,139 @@ a:focus, button:focus, input:focus {
     background: var(--primary-light);
     color: var(--text);
 }
+
+/* Estilos para la sección del PDF */
+.pdf-viewer-section {
+    background: var(--background);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin: 2rem 0;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.pdf-info {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.pdf-info h3 {
+    margin-top: 0;
+    color: var(--primary);
+}
+
+.pdf-info p {
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.pdf-preview {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+@media (max-width: 768px) {
+    .pdf-preview {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pdf-content {
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+}
+
+.pdf-text-preview {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+.pdf-text-preview p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.pdf-actions {
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+}
+
+.pdf-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.pdf-buttons a, .pdf-buttons button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.pdf-buttons .btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.pdf-buttons .btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.pdf-buttons .btn-secondary {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.pdf-buttons .btn-secondary:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.pdf-size {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-align: center;
+    font-style: italic;
+}
+
+.pdf-embed-container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Barra de desplazamiento personalizada para la vista previa */
+.pdf-text-preview::-webkit-scrollbar {
+    width: 6px;
+}
+
+.pdf-text-preview::-webkit-scrollbar-track {
+    background: var(--surface);
+    border-radius: 3px;
+}
+
+.pdf-text-preview::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 3px;
+}
+
+.pdf-text-preview::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
