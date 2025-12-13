@@ -944,3 +944,284 @@ a:focus, button:focus, input:focus {
 .pdf-text-preview::-webkit-scrollbar-thumb:hover {
     background: var(--primary-dark);
 }
+
+/* Estilos para podcast simple */
+.podcast-simple {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin: 2rem 0;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.podcast-header {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+.podcast-cover {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius);
+    object-fit: cover;
+    border: 3px solid var(--primary);
+}
+
+.podcast-info h3 {
+    margin-top: 0;
+    color: var(--text);
+    font-size: 1.3rem;
+}
+
+.podcast-description {
+    color: var(--text-light);
+    margin: 0.5rem 0 1rem 0;
+}
+
+.podcast-meta {
+    display: flex;
+    gap: 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.podcast-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Reproductor simple */
+.audio-player-simple {
+    margin: 1.5rem 0;
+}
+
+.audio-player-simple audio {
+    width: 100%;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+}
+
+.player-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.control-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.1);
+}
+
+#volume-slider {
+    width: 100px;
+    height: 5px;
+    -webkit-appearance: none;
+    background: var(--border);
+    border-radius: 3px;
+    outline: none;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    background: var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Enlaces de plataformas */
+.podcast-links {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.platform-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.platform-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.platform-link:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .podcast-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .podcast-meta {
+        justify-content: center;
+    }
+    
+    .platform-links {
+        justify-content: center;
+    }
+}
+
+/* Estilos para la sección de discusión */
+.discussion-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.question-card {
+    display: flex;
+    gap: 1rem;
+    background: var(--background);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border-left: 4px solid var(--primary);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.question-card:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow);
+    background: var(--primary-light);
+}
+
+.question-icon {
+    color: var(--primary);
+    font-size: 1.5rem;
+    margin-top: 0.25rem;
+}
+
+.question-content h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--primary-dark);
+}
+
+.question-content p {
+    margin-bottom: 0;
+    color: var(--text);
+}
+
+/* Frases útiles para discusión */
+.discussion-vocabulary {
+    margin-top: 2.5rem;
+    padding: 1.5rem;
+    background: var(--background);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+.phrase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.phrase-category {
+    padding: 1rem;
+    background: var(--surface);
+    border-radius: var(--radius);
+}
+
+.phrase-category h5 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+.phrase-category ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.phrase-category li {
+    padding: 0.35rem 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    border-bottom: 1px dashed var(--border);
+}
+
+.phrase-category li:last-child {
+    border-bottom: none;
+}
+
+/* Estilo para el tip de discusión (ya debería existir) */
+.discussion-tip {
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.discussion-tip h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--warning);
+}
+
+.discussion-tip i {
+    color: var(--warning);
+}
+
+/* Responsive para la sección de discusión */
+@media (max-width: 768px) {
+    .question-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .question-icon {
+        margin-top: 0;
+    }
+    
+    .phrase-grid {
+        grid-template-columns: 1fr;
+    }
+}

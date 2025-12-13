@@ -671,10 +671,11 @@
                     <li><a href="#introduction" class="nav-link">Introduction</a></li>
                     <li><a href="#vocabulary" class="nav-link">Key Vocabulary</a></li>
                     <li><a href="#reading" class="nav-link">Reading Section</a></li>
-                    <li><a href="#discussion" class="nav-link">Discussion Prompts</a></li>
+                    <li><a href="#discussion" class="nav-link">Discussion</a></li>
                     <li><a href="#conclusion" class="nav-link">Conclusion</a></li>
-                    <li><a href="#resources" class="nav-link">Further Resources</a></li>
-                    <li><a href="#pdf-article" class="nav-link">Academic Article</a></li>
+                    <li><a href="#resources" class="nav-link">Resources</a></li>
+                    <li><a href="#pdf-article" class="nav-link">Article</a></li>
+                    <li><a href="#podcast" class="nav-link">Podcast</a></li>
                 </ul>
             </nav>
         </div>
@@ -839,16 +840,85 @@
         <section id="discussion">
             <h2><i class="fas fa-comments icon-header"></i> 4. Discussion & Opinion</h2>
             <p>Use these prompts to practice speaking and expressing your opinion on the topic. Try to use vocabulary from this lesson in your responses.</p>
-            <ul>
-                <li><strong>Do you believe</strong> that you have true privacy while using the internet? Why or why not?</li>
-                <li><strong>In your opinion</strong>, should social media companies be allowed to sell user data? What regulations would you propose?</li>
-                <li><strong>Imagine you are</strong> a politician: propose a new law to protect digital privacy. What would it include?</li>
-                <li><strong>Consider this scenario:</strong> Your city wants to install facial recognition cameras in all public spaces. What questions would you ask before supporting or opposing this plan?</li>
-            </ul>
+            
+            <div class="discussion-questions">
+                <div class="question-card">
+                    <div class="question-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="question-content">
+                        <h4>Question 1: Personal Privacy</h4>
+                        <p><strong>Do you believe</strong> that you have true privacy while using the internet? Why or why not?</p>
+                    </div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="question-content">
+                        <h4>Question 2: Corporate Responsibility</h4>
+                        <p><strong>In your opinion</strong>, should social media companies be allowed to sell user data? What regulations would you propose?</p>
+                    </div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="question-content">
+                        <h4>Question 3: Legislative Action</h4>
+                        <p><strong>Imagine you are</strong> a politician: propose a new law to protect digital privacy. What would it include?</p>
+                    </div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="question-content">
+                        <h4>Question 4: Scenario Analysis</h4>
+                        <p><strong>Consider this scenario:</strong> Your city wants to install facial recognition cameras in all public spaces. What questions would you ask before supporting or opposing this plan?</p>
+                    </div>
+                </div>
+            </div>
             
             <div class="discussion-tip">
                 <h4><i class="fas fa-bullhorn"></i> Discussion Strategies</h4>
                 <p>When discussing controversial topics: 1) Acknowledge different perspectives, 2) Support your opinion with examples, 3) Use respectful language even when disagreeing.</p>
+            </div>
+            
+            <div class="discussion-vocabulary">
+                <h4><i class="fas fa-lightbulb"></i> Useful Phrases for Discussion</h4>
+                <div class="phrase-grid">
+                    <div class="phrase-category">
+                        <h5>Expressing Opinions</h5>
+                        <ul>
+                            <li>"In my view..."</li>
+                            <li>"I believe that..."</li>
+                            <li>"From my perspective..."</li>
+                            <li>"It seems to me that..."</li>
+                        </ul>
+                    </div>
+                    <div class="phrase-category">
+                        <h5>Agreeing/Disagreeing</h5>
+                        <ul>
+                            <li>"I see your point, but..."</li>
+                            <li>"That's a valid perspective, however..."</li>
+                            <li>"I completely agree with..."</li>
+                            <li>"I respectfully disagree because..."</li>
+                        </ul>
+                    </div>
+                    <div class="phrase-category">
+                        <h5>Giving Examples</h5>
+                        <ul>
+                            <li>"For instance..."</li>
+                            <li>"A good example is..."</li>
+                            <li>"This is similar to..."</li>
+                            <li>"Take the case of..."</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
         
@@ -994,6 +1064,89 @@
             </div>
         </section>
 
+        <!-- Sección 8: Podcast -->
+        <section id="podcast">
+            <h2><i class="fas fa-podcast icon-header"></i> 8. Podcast: Digital Privacy Talks</h2>
+            <p>Listen to our latest episode about mass surveillance and digital rights.</p>
+            
+            <div class="podcast-simple">
+                <!-- Portada y info -->
+                <div class="podcast-header">
+                    <img src="img/logo.png" alt="Podcast Cover" class="podcast-cover">
+                    <div class="podcast-info">
+                        <h3>Episode 1: The Surveillance Dilemma</h3>
+                        <p class="podcast-description">Exploring the balance between security and privacy in the digital age.</p>
+                        <div class="podcast-meta">
+                            <span><i class="far fa-clock"></i> 42:18 min</span>
+                            <span><i class="fas fa-calendar"></i> May 2025</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Reproductor simple -->
+                <div class="audio-player-simple">
+                    <audio id="podcast-audio" controls>
+                        <source src="audio/privacy-podcast.mp3" type="audio/mpeg">
+                        <source src="audio/privacy-podcast.ogg" type="audio/ogg">
+                        Tu navegador no soporta el elemento de audio.
+                    </audio>
+                    
+                    <div class="player-controls">
+                        <button class="control-btn" id="play-btn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="control-btn" id="mute-btn">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.7">
+                    </div>
+                </div>
+                
+                <!-- Enlaces de suscripción -->
+                <div class="podcast-links">
+                    <p><strong>Subscribe on:</strong></p>
+                    <div class="platform-links">
+                        <a href="#" class="platform-link">
+                            <i class="fab fa-spotify"></i> Spotify
+                        </a>
+                        <a href="#" class="platform-link">
+                            <i class="fab fa-apple"></i> Apple Podcasts
+                        </a>
+                        <a href="#" class="platform-link">
+                            <i class="fas fa-rss"></i> RSS
+                        </a>
+                    </div>
+                </div>
+
+                <div class="podcast-credits">
+    <h4>🎙️ Presentado por:</h4>
+    <div class="team-members">
+        <div class="member">
+            <i class="fas fa-user"></i>
+            <span>Elio</span>
+        </div>
+        <div class="member">
+            <i class="fas fa-user"></i>
+            <span>Valentina</span>
+        </div>
+        <div class="member">
+            <i class="fas fa-user"></i>
+            <span>Freimir</span>
+        </div>
+        <div class="member">
+            <i class="fas fa-user"></i>
+            <span>Solimar</span>
+        </div>
+        <div class="member">
+            <i class="fas fa-user"></i>
+            <span>Axel</span>
+        </div>
+    </div>
+    <p class="team-description">Estudiantes creadores de esta lección de inglés sobre privacidad digital.</p>
+</div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
@@ -1017,9 +1170,11 @@
                     <li><a href="#introduction">Introduction</a></li>
                     <li><a href="#vocabulary">Key Vocabulary</a></li>
                     <li><a href="#reading">Reading Section</a></li>
-                    <li><a href="#discussion">Discussion Prompts</a></li>
+                    <li><a href="#discussion">Discussion</a></li>
                     <li><a href="#conclusion">Conclusion</a></li>
-                    <li><a href="#pdf-article">Academic Article</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#pdf-article">Article</a></li>
+                    <li><a href="#podcast">Podcast</a></li>
                 </ul>
             </div>
 
@@ -1061,6 +1216,12 @@
             const themeToggle = document.getElementById('theme-toggle');
             const viewPdfBtn = document.getElementById('view-pdf-btn');
             const pdfEmbedContainer = document.getElementById('pdf-embed-container');
+            
+            // Elementos del podcast
+            const audio = document.getElementById('podcast-audio');
+            const playBtn = document.getElementById('play-btn');
+            const muteBtn = document.getElementById('mute-btn');
+            const volumeSlider = document.getElementById('volume-slider');
             
             // 1. Efecto de scroll en el header
             function handleScroll() {
@@ -1217,7 +1378,55 @@
                 });
             }
             
-            // 8. Event Listeners principales
+            // 8. Funcionalidad básica del reproductor de podcast
+            function setupSimplePodcastPlayer() {
+                if (!audio) return;
+                
+                // Botón de play/pause
+                if (playBtn) {
+                    playBtn.addEventListener('click', function() {
+                        if (audio.paused) {
+                            audio.play();
+                            this.innerHTML = '<i class="fas fa-pause"></i>';
+                        } else {
+                            audio.pause();
+                            this.innerHTML = '<i class="fas fa-play"></i>';
+                        }
+                    });
+                }
+                
+                // Botón de mute/unmute
+                if (muteBtn) {
+                    muteBtn.addEventListener('click', function() {
+                        audio.muted = !audio.muted;
+                        this.innerHTML = audio.muted ? 
+                            '<i class="fas fa-volume-mute"></i>' : 
+                            '<i class="fas fa-volume-up"></i>';
+                    });
+                }
+                
+                // Control de volumen
+                if (volumeSlider) {
+                    volumeSlider.addEventListener('input', function() {
+                        audio.volume = this.value;
+                    });
+                }
+                
+                // Actualizar icono de play/pause cuando el audio cambie
+                audio.addEventListener('play', function() {
+                    if (playBtn) {
+                        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    }
+                });
+                
+                audio.addEventListener('pause', function() {
+                    if (playBtn) {
+                        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    }
+                });
+            }
+            
+            // 9. Event Listeners principales
             function setupEventListeners() {
                 window.addEventListener('scroll', handleScroll);
                 menuToggle.addEventListener('click', toggleMobileMenu);
@@ -1276,11 +1485,12 @@
                 }
             }
             
-            // 9. Inicializar todas las funcionalidades
+            // 10. Inicializar todas las funcionalidades
             function init() {
                 setupEventListeners();
                 setupThemeToggle();
                 setupPdfViewer();
+                setupSimplePodcastPlayer();
                 handleScroll(); // Para el estado inicial
                 
                 // Manejar formulario de newsletter si existe

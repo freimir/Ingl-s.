@@ -182,4 +182,73 @@ if (viewPdfBtn) {
         }
     });
 }
+
+// 11-Funcionalidad básica del reproductor de podcast
+function setupSimplePodcastPlayer() {
+    const audio = document.getElementById('podcast-audio');
+    const playBtn = document.getElementById('play-btn');
+    const muteBtn = document.getElementById('mute-btn');
+    const volumeSlider = document.getElementById('volume-slider');
+    
+    if (!audio) return;
+    
+    // Botón de play/pause
+    if (playBtn) {
+        playBtn.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play();
+                this.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                audio.pause();
+                this.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        });
+    }
+    
+    // Botón de mute/unmute
+    if (muteBtn) {
+        muteBtn.addEventListener('click', function() {
+            audio.muted = !audio.muted;
+            this.innerHTML = audio.muted ? 
+                '<i class="fas fa-volume-mute"></i>' : 
+                '<i class="fas fa-volume-up"></i>';
+        });
+    }
+    
+    // Control de volumen
+    if (volumeSlider) {
+        volumeSlider.addEventListener('input', function() {
+            audio.volume = this.value;
+        });
+    }
+    
+    // Actualizar icono de play/pause cuando el audio cambie
+    audio.addEventListener('play', function() {
+        if (playBtn) {
+            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+    });
+    
+    audio.addEventListener('pause', function() {
+        if (playBtn) {
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+    });
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    setupSimplePodcastPlayer();
+    
+    // También para el tema claro/oscuro
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+});
 });
